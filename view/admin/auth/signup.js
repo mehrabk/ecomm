@@ -4,17 +4,31 @@ const { getError } = require("../../helper");
 module.exports = ({ req, errors }) => {
   return layout({
     content: `
-      <div>
-      Your id is : ${req.session.userId}
-        <form method="POST">
-          <input name="email" type="text" placeholder="Email" class="form-control m-4 w-50"  />
-          ${getError(errors, "email")}
-          <input name="password", tybe honestpe="password" placeholder="Password" class="form-control m-4 w-50"/>
-          ${getError(errors, "password")}
-          <input name="passwordConfirm" type="password" placeholder="Password Confirmation" class="form-control m-4 w-50"/>
-          ${getError(errors, "passwordConfirm")}
-          <button type="submit" class="m-3">Signup</button>
-        </form>
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-one-quarter">
+            <form method="POST">
+              <h1 class="title">Sign Up</h1>
+              <div class="field">
+                <label class="label">Email</label>
+                <input required class="input" placeholder="Email" name="email" />
+                <p class="help is-danger">${getError(errors, "email")}</p>
+              </div>
+              <div class="field">
+                <label class="label">Password</label>
+                <input required class="input" placeholder="Password" name="password" type="password" />
+                <p class="help is-danger">${getError(errors, "password")}</p>
+              </div>
+              <div class="field">
+                <label class="label">Password Confirmation</label>
+                <input required class="input" placeholder="Password Confirmation" name="passwordConfirmation" type="password" />
+                <p class="help is-danger">${getError(errors, "passwordConfirmation")}</p>
+              </div>
+              <button class="button is-primary">Submit</button>
+            </form>
+            <a href="/signin">Have an account? Sign In</a>
+          </div>
+        </div>
       </div>
     `,
   });

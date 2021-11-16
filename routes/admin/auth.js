@@ -1,7 +1,7 @@
 const express = require("express");
 const { validationResult, check } = require("express-validator");
 
-const userRepository = require("../../repositories/users");
+const userRepository = require("../../repositories/UserRepository");
 
 const signupTemplate = require("../../view/admin/auth/signup");
 const signinTemplate = require("../../view/admin/auth/signin");
