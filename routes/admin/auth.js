@@ -32,7 +32,7 @@ router.post(
     const { email, password } = req.body;
     const user = await userRepository.create({ email, password });
     req.session.userId = user.id;
-    res.send("ok tamam!");
+    res.redirect("/admin/products");
   }
 );
 
@@ -57,7 +57,7 @@ router.post(
     const { email } = req.body;
     const user = await userRepository.getOneBy({ email });
     req.session.userId = user.id;
-    res.send("You are Signed in!");
+    res.redirect("/admin/products");
   }
 );
 
@@ -65,7 +65,7 @@ module.exports = router;
 
 // req.session is an object that cookie-session middleware created for us
 // we add some information into this object and when we send them, cookie-session middleware
-// ..will automatic encrypt this information with keys that provided and set to response cookie
+// ..will automatic encrypt this information with keys that provided and set to response session
 // ..eventually save into browser and after that every request we have cookie in request
 // ..and cookie-session handle it again and authenticate and provide req.session object(intercept request)
 // if user manipulate this session, authentication will reject and session from user`s browser will remove.

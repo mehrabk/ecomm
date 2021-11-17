@@ -31,7 +31,6 @@ module.exports = {
     .isLength({ min: 6, max: 20 })
     .withMessage("Must be between 4 and 20 characters")
     .custom((passwordConfirm, { req }) => {
-      console.log("dadash velkon", req.body.passwordConfirm);
       if (passwordConfirm !== req.body.password) {
         throw new Error("password must match");
       }
