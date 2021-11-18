@@ -1,9 +1,9 @@
 const { validationResult } = require("express-validator");
 module.exports = {
-  handleError(templateFunc) {
+  handleError(templateFunc, dataCB) {
     let counter = 0;
     let timeoutId;
-    return (req, res, next) => {
+    return async (req, res, next) => {
       counter++;
       console.log(counter);
       if (counter >= 5) {
@@ -15,7 +15,12 @@ module.exports = {
       }
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.send(templateFunc({ errors }));
+        let data = {};
+        if (dataCB) {
+          data = await dataCB(req);
+        }
+        // inja dakhele ...data nokte dare ke data = {product: {}} then=> ...data = product
+        return res.send(templateFunc({ errors, ...data }));
       }
       next();
     };

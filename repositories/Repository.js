@@ -47,14 +47,14 @@ class Repository {
     await this.writeAll(filteredRecords);
   }
 
-  async update(id, user) {
-    console.log(user);
+  async update(id, attr) {
+    console.log(attr);
     const records = await this.getAll();
     if (records.some((item) => item.id === id)) {
-      const result = records.map((item) => (item.id !== id ? item : user));
+      const result = records.map((item) => (item.id !== id ? item : attr));
       await this.writeAll(result);
     } else {
-      throw new Error("user not found");
+      throw new Error("Obj not found");
     }
   }
   async updateRecord(id, attr) {

@@ -45,14 +45,30 @@ router.get("/admin/products/:id/edit", requireAuth, async (req, res) => {
 
 router.post(
   "/admin/products/:id/edit",
-  // upload.single("image"),
   requireAuth,
+  upload.single("image"),
   [requireTitle, requirePrice],
-  // handleError(XXXXX),
+  handleError(productEditTemplate, async (req) => {
+    const product = await ProductRepository.getOne(req.params.id);
+    return { product };
+  }),
   async (req, res) => {
-    console.log(req.body);
-    res.send("Done");
+    const changes = req.body;
+    if (req.file) {
+      changes.image = req.file.buffer.toString("base64");
+    }
+    try {
+      await ProductRepository.updateRecord(req.params.id, changes);
+    } catch (err) {
+      res.send("could not find item");
+    }
+    res.redirect("/admin/products");
   }
 );
+
+router.post("/admin/products/:id/delete", async (req, res) => {
+  await ProductRepository.delete(req.params.id);
+  res.redirect("/admin/products");
+});
 
 module.exports = router;
